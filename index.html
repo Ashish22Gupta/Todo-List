@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .main {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            width: 100%;
+        }
+
+        .main:hover {
+            transform: translateY(-5px);
+        }
+
+        .input_text input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+
+        .input_text input:focus {
+            border-color: #4caf50;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .Insert_btn button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4caf50;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s ease-in-out;
+        }
+
+        .Insert_btn button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .list {
+            margin-top: 20px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out, background-color 0.3s;
+        }
+
+        .list-item:hover {
+            transform: translateY(-2px);
+            background-color: #f3f3f3;
+        }
+
+        .list p {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            flex: 1;
+            word-wrap: break-word;
+        }
+
+        .list button {
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s ease-in-out;
+        }
+
+        .Update {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .Update:hover {
+            background-color: #e68900;
+            transform: scale(1.05);
+        }
+
+        .Delete {
+            background-color: #f44336;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .Delete:hover {
+            background-color: #e53935;
+            transform: scale(1.05);
+        }
+
+        .list input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .list input[type="text"]:focus {
+            border-color: #4caf50;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .Save {
+            background: blueviolet;
+            color: white;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .main {
+                padding: 15px;
+            }
+
+            .input_text input,
+            .Insert_btn button,
+            .list-item {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .list p {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .list button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .list-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .list p {
+                word-break: break-word;
+                text-align: center;
+            }
+
+            .list button {
+                width: 100%;
+                padding: 10px;
+                margin: 0 auto;
+                display: block;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="input_text">
+            <input type="text" placeholder="Enter The Text">
+        </div>
+        <div class="Insert_btn">
+            <button class="Insert">Insert</button>
+        </div>
+        <div class="list">
+            <!-- <p>The List is Here</p> -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".Insert").click(function () {
+                const inputText = $(".input_text input").val();
+                if (inputText.trim() !== "") {
+                    const listItem = `
+                <div class="list-item">
+                    <p>${inputText}</p>
+                    <button class="Update">Update</button>
+                    <button class="Delete">Delete</button>
+                </div>`;
+                    $(".list").append(listItem);
+                    $(".input_text input").val("");
+                }
+            });
+
+            $(".list").on("click", ".Update", function () {
+                const parentDiv = $(this).closest(".list-item");
+                const currentText = parentDiv.find("p").text();
+                const inputField = $('<input type="text" class="edit-input" />').val(currentText);
+
+                parentDiv.find("p").replaceWith(inputField);
+                $(this).text("Save").addClass("Save").removeClass("Update"); // Change button to "Save"
+            });
+
+            $(".list").on("click", ".Save", function () {
+                const parentDiv = $(this).closest(".list-item");
+                const inputField = parentDiv.find("input.edit-input");
+                const updatedText = inputField.val().trim();
+
+                if (updatedText !== "") {
+                    inputField.replaceWith(`<p>${updatedText}</p>`);
+                } else {
+                    inputField.replaceWith(`<p>Unnamed</p>`); // Default text if input is empty
+                }
+                $(this).text("Update").addClass("Update").removeClass("Save"); // Revert button to "Update"
+            });
+
+            $(".list").on("click", ".Delete", function () {
+                $(this).closest(".list-item").remove();
+            });
+        });
+    </script>
+</body>
+</html>
